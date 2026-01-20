@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
       - name: mcp-server
-        image: mcp-server-streamable-http:latest
-        imagePullPolicy: IfNotPresent
+        image: aliok/mcp-server-streamable-http:latest
+        imagePullPolicy: Always
         ports:
         - name: http
           containerPort: 8081

@@ -25,6 +25,12 @@ Built with the official MCP Go SDK (`github.com/modelcontextprotocol/go-sdk`), t
 - `/mcp` - Streamable HTTP endpoint for JSON-RPC requests
 - `/health` - Health check endpoint
 
+## Requirements
+
+- Go 1.23 or later
+- Docker (for containerization)
+- Kubernetes cluster (for deployment)
+
 ## Installation
 
 ```bash
@@ -43,38 +49,30 @@ The server will start on `http://localhost:8081`
 
 ## Kubernetes Deployment
 
-### Build Docker Image
+### Build and Push Docker Image
 
 ```bash
 cd sample-mcp-server-streamable-http
-docker build -t mcp-server-streamable-http:latest .
+
+# Build for linux/amd64 architecture
+docker build -t aliok/mcp-server-streamable-http:latest .
+
+# Push to Docker Hub (or your registry)
+docker push aliok/mcp-server-streamable-http:latest
 ```
 
-### Push to Container Registry (Optional)
-
-If using a remote Kubernetes cluster, push the image to your container registry:
-
-```bash
-# Tag for your registry
-docker tag mcp-server-streamable-http:latest your-registry.com/mcp-server-streamable-http:latest
-
-# Push to registry
-docker push your-registry.com/mcp-server-streamable-http:latest
-```
-
-Update the image in `k8s/deployment.yaml` to match your registry.
+**Note**: Replace `aliok` with your Docker Hub username or registry path. The Dockerfile is configured to build for linux/amd64 architecture.
 
 ### Deploy to Kubernetes
 
-Using kubectl:
+Deploy using kubectl:
 
 ```bash
 # Apply manifests
 kubectl apply -f k8s/
-
-# Or using kustomize
-kubectl apply -k k8s/
 ```
+
+**Note**: The deployment uses `aliok/mcp-server-streamable-http:latest`. Update `k8s/deployment.yaml` if using a different registry.
 
 ### Verify Deployment
 
